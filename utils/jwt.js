@@ -6,6 +6,10 @@ const createJWT = ({ payload }) => {
   });
 };
 
+const verifyJWT = ({ token }) => {
+  return jwt.verify(token, process.env.JWT_SECRET_KEY);
+};
+
 const attachCookiesToResponse = ({ res, payload }) => {
   const token = createJWT({ payload });
   const oneDay = 1000 * 60 * 60 * 24;
@@ -19,5 +23,6 @@ const attachCookiesToResponse = ({ res, payload }) => {
 
 module.exports = {
   createJWT,
+  verifyJWT,
   attachCookiesToResponse,
 };
