@@ -10,18 +10,12 @@ const productRouter = require("./routes/productRoutes");
 const notFoundMiddleware = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler");
 const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
 
+app.use(express.static("./public"));
+app.use(fileUpload());
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET_KEY));
-
-app.get("/", (req, res) => {
-  res.send("Home Page");
-});
-
-app.get("/api/v1", (req, res) => {
-  console.log(req.signedCookies);
-  res.send("testing for cookies");
-});
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
