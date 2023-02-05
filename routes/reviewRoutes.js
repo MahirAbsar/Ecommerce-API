@@ -17,3 +17,5 @@ router
   .get(getSingleReview)
   .patch(authentication, updateReview)
   .delete(authentication, deleteReview);
+
+module.exports = router;
