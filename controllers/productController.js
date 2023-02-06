@@ -6,7 +6,7 @@ const { NotFoundError, BadRequestError } = require("../error");
 const createProduct = async (req, res) => {
   req.body.user = req.user.userID;
   const product = await Product.create(req.body);
-  res.status(StatusCodes.CREATED).json({ product });
+  return res.status(StatusCodes.CREATED).json({ product });
 };
 
 const getAllProducts = async (req, res) => {
@@ -17,7 +17,7 @@ const getAllProducts = async (req, res) => {
 const getSingleProduct = async (req, res) => {
   const { id: productID } = req.params;
 
-  const product = await Product.findOne({ _id: productID });
+  const product = await Product.findOne({ _id: productID }).populate("reviews");
 
   if (!product) {
     throw new NotFoundError(`No product found with id: ${productID}`);
